@@ -26,11 +26,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y locales && \
     dpkg-reconfigure --frontend=noninteractive locales && \
     /usr/sbin/update-locale LANG=en_US.UTF-8 && \
     apt-get clean
+
 ENV LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8
 
-RUN apt install -y openvpn
+RUN apt install -y openvpn && apt install -y --force-yes kali-linux-default
 
 #this places the config where it needs to be in /etc/
 ADD . /etc/openvpn/client/
