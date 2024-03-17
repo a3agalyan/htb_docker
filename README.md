@@ -1,30 +1,39 @@
-# Project Title
-
-HackTheBox Docker ready-to-use.
-
-Here's the revised paragraph to be added to the README.md file under the "Motivation" section:
-
----
+# HackTheBox Docker ready-to-use.
 
 ## Motivation
 
-I've recently started practicing on [HackTheBox](https://www.hackthebox.com/). Setting up a VM on my Macbook seemed like an overkill to me, so I opted to use Docker instead. However, I couldn't find any ready-to-use Dockerfiles, so I decided to compile my own, which I am excited to share with the community. 
+I've recently started practicing on [HackTheBox](https://www.hackthebox.com/). Setting up a VM on my Macbook seemed like an overkill to me, so I decided to use Docker instead. However, I couldn't find any ready-to-use Dockerfiles, so I decided to compile my own, which I am excited to share with the community. 
 
 It uses a Kali Linux image and runs an OpenVPN inside the container. With this setup, you can conveniently access the lab server directly from within the container.
 
---- 
+---
 
 ## Installation
 
-[Instructions on how to install and get the project running]
+Follow these simple steps to get set up:
+
+1. Place `htb.dockerfile` and `{file_name}.ovpn` in the same directory.
+2. Execute the build command:  
+   ```
+   docker build -f htb.dockerfile -t htb:v0 .
+   ```
+3. Replace `{file_name}.ovpn` with your OpenVPN file name and start the container with the run command:  
+   ```
+   docker run -d --cap-add SYS_ADMIN -d --privileged --sysctl net.ipv6.conf.all.disable_ipv6=0 --rm -it htb:v0 {file_name}.ovpn
+   ```
+
+---
 
 ## Usage
+At this point your container is already in internal Lab's VPN.
+Open new terminal tab and access container bash:
 
-[Instructions and examples on how to use the project]
+`docker exec -it {container_name} bash`
 
+---
 
-# htb_docker
+## PS
 
-docker run -d --cap-add SYS_ADMIN -d --privileged --sysctl net.ipv6.conf.all.disable_ipv6=0 --rm htb:v1
-docker exec -it {container_name} bash
-openvpn /etc/openvpn/client/
+Some of the packages might be missing from my build. I'll keep adding them as I progress in learning about the platform. 
+
+For details, check the Dockerfile.
